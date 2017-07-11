@@ -30,6 +30,11 @@ function Init()
 	
 	m_touchEvents = false;
 	
+	if( !IsPhoneGap() )
+	{
+		InputSetup();
+	}
+	
 	ResizeGame();
 		
 	m_gameState = GameState.IN_GAME;
