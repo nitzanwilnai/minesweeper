@@ -9,7 +9,7 @@ var g_lightBlue = "#c9e7f7";
 
 
 var g_minBlocksWide = 12;
-var g_minBlocksHigh = 12;
+var g_minBlocksHigh = 14;
 var g_numBlocksWide = 12;
 var g_numBlocksHigh = 12;
 var g_blockSize;
