@@ -35,6 +35,8 @@ function Init()
 		InputSetup();
 	}
 	
+	InitButtons();
+	
 	ResizeGame();
 		
 	m_gameState = GameState.IN_GAME;
