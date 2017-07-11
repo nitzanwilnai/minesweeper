@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, target-densityDpi=device-dpi, minimal-ui" />
+				
+		<meta name="apple-mobile-web-app-title" content="Letters">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="apple-touch-icon-precomposed" href="icon.png"/>
+		<link rel="apple-touch-startup-image" href="icon.png" />
+
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+
+		<link rel="stylesheet" href="assets/css/main.css?v=1">
+
+		<script src="js/global_variables.js"></script>
+		<script src="js/common_functions.js"></script>
+		<script src="js/button.js"></script>
+		<script src="js/slider.js"></script>
+		<script src="js/input_handler.js"></script>
+		<script src="js/minesweep.js"></script>
+
+	</head>
+	<style>
+		#gameArea
+		{
+			position: absolute;
+			left:     50%;
+			top:      50%;
+		}
+		
+		#canvas
+		{
+			width: 100%;
+			height: 100%;
+		}
+
+        canvas, img {
+            image-rendering: optimizeSpeed;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: optimize-contrast;
+            -ms-interpolation-mode: nearest-neighbor;
+        }
+
+		</style>
+
+	<body onLoad="Init()">
+		<div id="gameArea">
+			<canvas id="canvas"></canvas>
+		</div>
+
+		<form method="post" action="submitscore.php" name="myForm" id="myForm">
+			<input type="hidden" name="highScore" id="highScore"/>
+		</form>
+	</body>
+
+
+
+	<script type="text/javascript">
+		$(document).ready( function()
+						  {
+						  document.addEventListener("deviceready", function()
+													{
+													Init();
+													});
+						  });
+	</script>
+</html>
+
