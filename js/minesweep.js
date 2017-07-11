@@ -35,10 +35,10 @@ function Init()
 		InputSetup();
 	}
 	
+	ResizeGame();
+
 	InitButtons();
 	
-	ResizeGame();
-		
 	m_gameState = GameState.IN_GAME;
 	
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
