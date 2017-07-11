@@ -102,16 +102,16 @@ function InitButtons()
 
 	AddButton( m_gameOverButtons,
 			  ( g_numBlocksWide - buttonWidth  ) / 2,
-			  buttonY + 1,
+			  ( g_numBlocksHigh - 1.5 ),
 			  buttonWidth,
-			  2,
+			  buttonHeight,
 			  "Mines found: ", null, g_gameFont );
 	m_gameOverScoreIndex = 1;
 	
 	AddButton( m_gameOverButtons,
-			  ( g_numBlocksWide - buttonWidth  ) / 2,
-			  ( g_numBlocksHigh - 1.5 ),
-			  buttonWidth,
+			  1,
+			  buttonY,
+			  1,
 			  buttonHeight,
 			  String.fromCharCode("0xf021"),
 			  function() { StartGame(); },
@@ -304,55 +304,7 @@ function Draw()
 				m_inGameButtons[i].Draw( ctx );
 			}
 			
-			ctx.save();
-			{
-				ctx.translate( g_boardOffsetX, g_boardOffsetY );
-
-				ctx.fillStyle = g_darkBlue;
-
-				if( g_selectedIndexI > -1 && g_selectedIndexJ > -1 )
-				{
-					ctx.fillRect( g_selectedIndexI * g_blockSize, g_selectedIndexJ * g_blockSize, g_blockSize, g_blockSize );
-				}
-
-				ctx.strokeStyle = g_darkBlue;
-				for( var i = 0; i < g_boardBlocksWide; i++ )
-				{
-					for( var j = 0; j < g_boardBlocksHigh; j++ )
-					{
-						ctx.fillStyle = g_lightBlue;
-						if( g_board[i][j] > -1 )
-						{
-							ctx.fillRect( i * g_blockSize, j * g_blockSize, g_blockSize, g_blockSize );
-						}
-
-						ctx.fillStyle = g_darkBlue;
-
-						if( g_boardFlags[i][j] )
-						{
-							ctx.font = g_fontAwesome;
-							ctx.fillText( String.fromCharCode("0xf024"), i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
-						}
-						else if( g_board[i][j] > 0 )
-						{
-							ctx.font = g_gameFont;
-							ctx.fillText( g_board[i][j], i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
-						}
-
-						if( g_boardMines[i][j] )
-						{
-							//ctx.font = g_fontAwesome;
-							//ctx.fillText( String.fromCharCode("0xf1e2"), i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
-						}
-
-						ctx.strokeRect( i * g_blockSize, j * g_blockSize, g_blockSize, g_blockSize );
-
-					}
-				}
-			}
-			ctx.restore();
-			
-			
+			DrawBoard( ctx );
 		}
 		
 		if( m_gameState == GameState.GAME_OVER )
@@ -366,7 +318,7 @@ function Draw()
 			var scoreText = [];
 			scoreText[0] = "Mines found: " + g_score + " / " + g_numMines;
 			if( g_score == g_numMines ) {
-				scoreText[1] = "All mines found!!!";
+				scoreText[0] = "All mines found!!!";
 			}
 			m_gameOverButtons[m_gameOverScoreIndex].ChangeText( scoreText );
 			
@@ -375,6 +327,7 @@ function Draw()
 				m_gameOverButtons[i].Draw( ctx );
 			}
 
+			DrawBoard( ctx );
 		}
 		
 		var d2 = new Date();
@@ -398,6 +351,66 @@ function Draw()
 		
 	// this line below unlocks super fast framrate on browsers, but not on mobile which is why its commented out
 	//window.requestAnimationFrame(draw, canvas); //???
+}
+
+function DrawBoard( ctx )
+{
+	ctx.save();
+	{
+		ctx.translate( g_boardOffsetX, g_boardOffsetY );
+		
+		ctx.fillStyle = g_darkBlue;
+		
+		if( g_selectedIndexI > -1 && g_selectedIndexJ > -1 )
+		{
+			ctx.fillRect( g_selectedIndexI * g_blockSize, g_selectedIndexJ * g_blockSize, g_blockSize, g_blockSize );
+		}
+		
+		ctx.strokeStyle = g_darkBlue;
+		for( var i = 0; i < g_boardBlocksWide; i++ )
+		{
+			for( var j = 0; j < g_boardBlocksHigh; j++ )
+			{
+				ctx.fillStyle = g_lightBlue;
+				if( g_board[i][j] > -1 )
+				{
+					ctx.fillRect( i * g_blockSize, j * g_blockSize, g_blockSize, g_blockSize );
+				}
+				
+				ctx.fillStyle = g_darkBlue;
+				
+				if( g_boardFlags[i][j] )
+				{
+					ctx.font = g_fontAwesome;
+					ctx.fillText( String.fromCharCode("0xf024"), i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
+				}
+				else if( g_board[i][j] > 0 )
+				{
+					ctx.font = g_gameFont;
+					ctx.fillText( g_board[i][j], i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
+				}
+				
+				if( g_boardMines[i][j] )
+				{
+					// show bombs on game over
+					if( m_gameState == GameState.GAME_OVER )
+					{
+						ctx.fillStyle = g_lightBlue;
+						ctx.fillRect( i * g_blockSize, j * g_blockSize, g_blockSize, g_blockSize );
+
+						ctx.fillStyle = g_darkBlue;
+						ctx.font = g_fontAwesome;
+						ctx.fillText( String.fromCharCode("0xf1e2"), i * g_blockSize + ( g_blockSize / 2 ), j * g_blockSize + ( g_blockSize / 2 ) );
+					}
+				}
+				
+				ctx.strokeRect( i * g_blockSize, j * g_blockSize, g_blockSize, g_blockSize );
+				
+			}
+		}
+	}
+	ctx.restore();
+
 }
 
 // Call ReSize() when the screen size changes or the phone orientation changes:
