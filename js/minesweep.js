@@ -234,8 +234,6 @@ function ResizeGame() {
 	
 	// shouldn't get called the first time?
 	ResizeElements();
-	
-	InitButtons();
 }
 
 function ResizeElements()
