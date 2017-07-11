@@ -6,6 +6,8 @@ var g_fontAwesome;
 var g_backgroundColor = "#e8e8e8";
 var g_darkBlue = "#244892";
 var g_lightBlue = "#c9e7f7";
+var g_greenColor = "#caf7c9";
+var g_redColor = "#f7c9c9";
 
 
 var g_minBlocksWide = 12;
